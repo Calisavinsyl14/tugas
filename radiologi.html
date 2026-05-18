@@ -13,8 +13,8 @@
         <a href="index.html">Dashboard</a>
         <a href="pendaftaran.html">Pendaftaran</a>
         <a href="poli.html">Pemeriksaan Poli</a>
-        <a class="active" href="farmasi.html">Farmasi</a>
-        <a href="radiologi.html">Radiologi</a>
+        <a href="farmasi.html">Farmasi</a>
+        <a class="active" href="radiologi.html">Radiologi</a>
         <a href="laboratorium.html">Laboratorium</a>
         <a href="kasir.html">Kasir</a>
         <a href="login.html">Logout</a>
@@ -24,13 +24,18 @@
         <div class="card">
             <h2>Laboratorium</h2>
             <input placeholder="Nama Pasien">
-            <input placeholder="Hematologi">
-            <input placeholder="Hasil Laboratorium">
+            <select>
+                <option><strong>Hematologi</strong></option>
+                <option>Kimia Klinik</option>
+                <option>Mikrobiologi</option>
+                <option>Urinalisis</option>
+            </select>
+            <textarea class="hasil-labrad" placeholder="Hasil Laboratorium"></textarea>
             <button>Simpan Hasil</button>
         </div>
 
         <div class="card">
-            <h2>Daftar Pemeriksaan Lab</h2>
+            <h2>Daftar Radiologi</h2>
             <table>
                 <tr>
                     <th>Pasien</th>
@@ -38,9 +43,9 @@
                     <th>Hasil</th>
                 </tr>
                 <tr>
-                    <td>Siti</td>
-                    <td>Hematologi</td>
-                    <td>Normal</td>
+                    <td>Andi</td>
+                    <td>X-Ray</td>
+                    <td>Tidak ditemukan kelainan</td>
                 </tr>
             </table>
         </div>
