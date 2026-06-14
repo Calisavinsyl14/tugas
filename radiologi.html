@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMKES</title>
-     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="index.css" />
+</head>
 
 <body>
-     <div class="sidebar">
+
+    <div class="sidebar">
         <h2>SIMKES</h2>
         <a href="index.html">Dashboard</a>
         <a href="pendaftaran.html">Pendaftaran</a>
@@ -19,38 +21,77 @@
         <a href="kasir.html">Kasir</a>
         <a href="login.html">Logout</a>
     </div>
+
     <div class="main">
 
         <div class="card">
-            <h2>Laboratorium</h2>
-            <input placeholder="Nama Pasien">
-            <select>
-                <option><strong>Hematologi</strong></option>
-                <option>Kimia Klinik</option>
-                <option>Mikrobiologi</option>
-                <option>Urinalisis</option>
+            <h2>Radiologi</h2>
+
+            <input type="text" id="namaPasien" placeholder="Nama Pasien">
+
+            <select id="pemeriksaan">
+                <option value="X-Ray">X-Ray</option>
+                <option value="CT Scan">CT Scan</option>
+                <option value="MRI">MRI</option>
+                <option value="USG">USG</option>
             </select>
-            <textarea class="hasil-labrad" placeholder="Hasil Laboratorium"></textarea>
-            <button>Simpan Hasil</button>
+
+            <textarea id="hasilLab" class="hasil-labrad"
+                placeholder="Hasil Laboratorium"></textarea>
+
+            <button onclick="simpanHasil()">Simpan Hasil</button>
         </div>
 
         <div class="card">
-            <h2>Daftar Radiologi</h2>
-            <table>
-                <tr>
-                    <th>Pasien</th>
-                    <th>Pemeriksaan</th>
-                    <th>Hasil</th>
-                </tr>
-                <tr>
-                    <td>Andi</td>
-                    <td>X-Ray</td>
-                    <td>Tidak ditemukan kelainan</td>
-                </tr>
+            <h2>Data Pemeriksaan Radiologi</h2>
+
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>Pasien</th>
+                        <th>Pemeriksaan</th>
+                        <th>Hasil</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelLab">
+                    <tr>
+                        <td>Siti</td>
+                        <td>X-Ray</td>
+                        <td>Normal</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
     </div>
+
+    <script>
+        function simpanHasil() {
+            let pasien = document.getElementById("namaPasien").value;
+            let pemeriksaan = document.getElementById("pemeriksaan").value;
+            let hasil = document.getElementById("hasilLab").value;
+
+            if (pasien === "" || hasil === "") {
+                alert("Semua data harus diisi!");
+                return;
+            }
+            let tabel = document.getElementById("tabelLab");
+            let barisBaru = `
+                <tr>
+                    <td>${pasien}</td>
+                    <td>${pemeriksaan}</td>
+                    <td>${hasil}</td>
+                </tr>
+            `;
+
+            tabel.innerHTML += barisBaru;
+            document.getElementById("namaPasien").value = "";
+            document.getElementById("pemeriksaan").selectedIndex = 0;
+            document.getElementById("hasilLab").value = "";
+        }
+    </script>
+
 </body>
 
 </html>

@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <div class="sidebar">
         <h2>SIMKES</h2>
         <a href="index.html">Dashboard</a>
@@ -20,44 +21,87 @@
         <a href="kasir.html">Kasir</a>
         <a href="login.html">Logout</a>
     </div>
+
     <div class="main">
 
+        <!-- Form Pendaftaran -->
         <div class="card">
             <h2>Form Pendaftaran</h2>
-            <input placeholder="Nama Pasien">
-            <select>
-                <option>Poli Umum</option>
-                <option>Poli Gigi</option>
+
+            <input type="text" id="namaPasien" placeholder="Nama Pasien">
+
+            <select id="poli">
+                <option value="Poli Umum">Poli Umum</option>
+                <option value="Poli Gigi">Poli Gigi</option>
             </select>
-            <br />
-            <button>Simpan</button>
+
+            <br><br>
+
+            <button onclick="simpanData()">Simpan</button>
         </div>
 
+        <!-- Tabel Pendaftaran -->
         <div class="card">
             <h2>List Pendaftaran</h2>
-            <table>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Poli</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Budi</td>
-                    <td>Umum</td>
-                    <td><span class="badge wait">Menunggu</span></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Siti</td>
-                    <td>Gigi</td>
-                    <td><span class="badge done">Selesai</span></td>
-                </tr>
+
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Poli</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelPendaftaran">
+                    <tr>
+                        <td>1</td>
+                        <td>Budi</td>
+                        <td>Poli Umum</td>
+                        <td><span class="badge wait">Menunggu</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Siti</td>
+                        <td>Poli Gigi</td>
+                        <td><span class="badge done">Selesai</span></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
     </div>
-</body>
 
+    <script>
+        function simpanData() {
+
+            let nama = document.getElementById("namaPasien").value;
+            let poli = document.getElementById("poli").value;
+
+            // Validasi
+            if (nama === "") {
+                alert("Nama pasien harus diisi!");
+                return;
+            }
+
+            let tabel = document.getElementById("tabelPendaftaran");
+            let nomor = tabel.rows.length + 1;
+            let barisBaru = `
+                <tr>
+                    <td>${nomor}</td>
+                    <td>${nama}</td>
+                    <td>${poli}</td>
+                    <td><span class="badge wait">Menunggu</span></td>
+                </tr>
+            `;
+
+            tabel.innerHTML += barisBaru;
+            document.getElementById("namaPasien").value = "";
+            document.getElementById("poli").selectedIndex = 0;
+        }
+    </script>
+
+</body>
 </html>

@@ -9,7 +9,8 @@
 </head>
 
 <body>
-   <div class="sidebar">
+
+    <div class="sidebar">
         <h2>SIMKES</h2>
         <a href="index.html">Dashboard</a>
         <a href="pendaftaran.html">Pendaftaran</a>
@@ -20,32 +21,69 @@
         <a class="active" href="kasir.html">Kasir</a>
         <a href="login.html">Logout</a>
     </div>
+
     <div class="main">
 
         <div class="card">
             <h2>Pembayaran</h2>
-            <input placeholder="Nama Pasien">
-            <input placeholder="Total">
-            <button>Bayar</button>
+
+            <input type="text" id="namaPasien" placeholder="Nama Pasien">
+            <input type="number" id="totalBayar" placeholder="Total">
+
+            <button onclick="tambahTransaksi()">Bayar</button>
         </div>
 
         <div class="card">
             <h2>Riwayat Transaksi</h2>
-            <table>
-                <tr>
-                    <th>Pasien</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>Budi</td>
-                    <td>100000</td>
-                    <td>Lunas</td>
-                </tr>
+
+            <table border="1" width="100%">
+                <thead>
+                    <tr>
+                        <th>Pasien</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelTransaksi">
+                    <tr>
+                        <td>Budi</td>
+                        <td>100000</td>
+                        <td>Lunas</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
     </div>
+
+    <script>
+        function tambahTransaksi() {
+
+            let pasien = document.getElementById("namaPasien").value;
+            let total = document.getElementById("totalBayar").value;
+
+            if (pasien === "" || total === "") {
+                alert("Silakan isi semua data terlebih dahulu!");
+                return;
+            }
+
+            let tabel = document.getElementById("tabelTransaksi");
+
+            let barisBaru = `
+                <tr>
+                    <td>${pasien}</td>
+                    <td>Rp ${parseInt(total).toLocaleString('id-ID')}</td>
+                    <td>Lunas</td>
+                </tr>
+            `;
+
+            tabel.innerHTML += barisBaru;
+            document.getElementById("namaPasien").value = "";
+            document.getElementById("totalBayar").value = "";
+        }
+    </script>
+
 </body>
 
 </html>
