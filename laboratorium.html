@@ -24,7 +24,7 @@
 
     <div class="main">
 
-        <!-- Form Radiologi -->
+        <!-- Form Laboratorium -->
         <div class="card">
             <h2>Laboratorium</h2>
 
@@ -37,33 +37,35 @@
                 <option value="Urinalisis">Urinalisis</option>
             </select>
 
-            <textarea id="hasilPemeriksaan"
+            <textarea
+                id="hasilPemeriksaan"
                 class="hasil-labrad"
                 placeholder="Hasil Pemeriksaan"></textarea>
 
             <br><br>
 
-            <button onclick="simpanHasil()">Simpan Hasil</button>
+            <button id="submit" onclick="simpanHasil()">
+                Simpan Hasil
+            </button>
         </div>
 
+        <!-- Tabel Data Laboratorium -->
         <div class="card">
             <h2>Daftar Laboratorium</h2>
 
             <table border="1" width="100%">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Pasien</th>
                         <th>Pemeriksaan</th>
                         <th>Hasil</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
 
-                <tbody id="tabelRadiologi">
-                    <tr>
-                        <td>Andi</td>
-                        <td>Hematologi</td>
-                        <td>Tidak ditemukan kelainan</td>
-                    </tr>
+                <tbody id="tabelLaboratorium">
+
                 </tbody>
             </table>
         </div>
@@ -71,31 +73,91 @@
     </div>
 
     <script>
+        let laboratorium = [];
+        let indexUpdate = -1;
         function simpanHasil() {
-            let pasien = document.getElementById("namaPasien").value;
-            let pemeriksaan = document.getElementById("pemeriksaan").value;
-            let hasil = document.getElementById("hasilPemeriksaan").value;
-
-            if (pasien === "" || hasil === "") {
+            let namaPasien =
+                document.getElementById("namaPasien").value.trim();
+            let pemeriksaan =
+                document.getElementById("pemeriksaan").value;
+            let hasilPemeriksaan =
+                document.getElementById("hasilPemeriksaan").value.trim();
+            if (namaPasien === "" || hasilPemeriksaan === "") {
                 alert("Semua data harus diisi!");
                 return;
             }
-            let tabel = document.getElementById("tabelRadiologi");
-            let barisBaru = `
-                <tr>
-                    <td>${pasien}</td>
-                    <td>${pemeriksaan}</td>
-                    <td>${hasil}</td>
-                </tr>
-            `;
 
-            tabel.innerHTML += barisBaru;
+            if (indexUpdate !== -1) {
+                laboratorium[indexUpdate] = {
+                    namaPasien,
+                    pemeriksaan,
+                    hasilPemeriksaan
+                };
+
+                indexUpdate = -1;
+                document.getElementById("submit").innerText =
+                    "Simpan Hasil";
+                alert("Data laboratorium berhasil diupdate");
+
+            } else {
+                laboratorium.push({
+                    namaPasien,
+                    pemeriksaan,
+                    hasilPemeriksaan
+                });
+                alert("Data laboratorium berhasil disimpan");
+            }
+            renderTable();
             document.getElementById("namaPasien").value = "";
             document.getElementById("pemeriksaan").selectedIndex = 0;
             document.getElementById("hasilPemeriksaan").value = "";
         }
+
+
+        function renderTable() {
+            let html = "";
+            laboratorium.forEach((item, index) => {
+                html += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${item.namaPasien}</td>
+                    <td>${item.pemeriksaan}</td>
+                    <td>${item.hasilPemeriksaan}</td>
+                    <td>
+                        <button onclick="updateHasil(${index})">
+                            Update
+                        </button>
+
+                        <button onclick="deleteHasil(${index})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                `;
+            });
+            document.getElementById("tabelLaboratorium").innerHTML = html;
+        }
+
+
+        function deleteHasil(index) {
+            let konfirmasi = confirm(
+                `Yakin ingin menghapus data laboratorium pasien ${laboratorium[index].namaPasien}?`
+            );
+            if (konfirmasi) {
+                laboratorium.splice(index, 1);
+                renderTable();
+                alert("Data laboratorium berhasil dihapus");
+            }
+        }
+
+
+        function updateHasil(index) {
+            document.getElementById("namaPasien").value = laboratorium[index].namaPasien;
+            document.getElementById("pemeriksaan").value = laboratorium[index].pemeriksaan;
+            document.getElementById("hasilPemeriksaan").value = laboratorium[index].hasilPemeriksaan;
+            indexUpdate = index;
+            document.getElementById("submit").innerText ="Update";
+        }
     </script>
-
 </body>
-
 </html>
