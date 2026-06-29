@@ -79,7 +79,7 @@
             document.getElementById("poli").selectedIndex = 0;
         }
 
-        let pasien = []
+        let pasien = localStorage.getItem('pasien') ? JSON.parse(localStorage.getItem('pasien')) : []
         let indexUpdate = -1
         function submitRegister() {
             let namaPasien = document.getElementById('namaPasien').value.trim()
@@ -90,6 +90,7 @@
                         namaPasien,
                         poli
                     }
+                    localStorage.setItem('pasien', JSON.stringify(pasien))
                     document.getElementById('submit').innerText = 'simpan'
                     indexUpdate = -1
                     alert('Pasien Berhasil diupdate')
@@ -98,6 +99,7 @@
                         namaPasien,
                         poli
                     })
+                    localStorage.setItem('pasien', JSON.stringify(pasien))
                     alert('Pasien Berhasil disimpan')
                 }
                 renderTable()
@@ -135,6 +137,7 @@
 
         if (konfirmasi) {
             pasien.splice(index, 1)
+            localStorage.setItem('pasien', JSON.stringify(pasien))
             renderTable()
             alert('Pasien berhasil dihapus')
         }
@@ -146,6 +149,7 @@
         document.getElementById('poli').value = pasien[index].poli
         indexUpdate = index
     }
+    renderTable()
     </script>
 
 </body>
