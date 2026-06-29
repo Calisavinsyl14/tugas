@@ -73,7 +73,7 @@
     </div>
 
     <script>
-        let laboratorium = [];
+        let laboratorium = localStorage.getItem('laboratorium') ? JSON.parse(localStorage.getItem('laboratorium')) : [];
         let indexUpdate = -1;
         function simpanHasil() {
             let namaPasien =
@@ -95,8 +95,8 @@
                 };
 
                 indexUpdate = -1;
-                document.getElementById("submit").innerText =
-                    "Simpan Hasil";
+                localStorage.setItem('laboratorium', JSON.stringify(laboratorium))
+                document.getElementById("submit").innerText = "Simpan Hasil";
                 alert("Data laboratorium berhasil diupdate");
 
             } else {
@@ -105,6 +105,7 @@
                     pemeriksaan,
                     hasilPemeriksaan
                 });
+                localStorage.setItem('laboratorium', JSON.stringify(laboratorium))
                 alert("Data laboratorium berhasil disimpan");
             }
             renderTable();
@@ -145,6 +146,7 @@
             );
             if (konfirmasi) {
                 laboratorium.splice(index, 1);
+                localStorage.setItem('laboratorium', JSON.stringify(laboratorium))
                 renderTable();
                 alert("Data laboratorium berhasil dihapus");
             }
@@ -158,6 +160,7 @@
             indexUpdate = index;
             document.getElementById("submit").innerText ="Update";
         }
+        renderTable()
     </script>
 </body>
 </html>

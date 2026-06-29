@@ -64,7 +64,7 @@
 
     <script>
 
-        let resep = [];
+        let resep = localStorage.getItem('resep') ? JSON.parse(localStorage.getItem('resep')) : [];
         let indexUpdate = -1;
         function tambahObat() {
             let namaPasien = document.getElementById("namaPasien").value.trim();
@@ -74,7 +74,6 @@
                 alert("Semua data harus diisi!");
                 return;
             }
-
             if (indexUpdate !== -1) {
                 resep[indexUpdate] = {
                     namaPasien,
@@ -82,6 +81,7 @@
                     jumlah
                 };
                 indexUpdate = -1;
+                localStorage.setItem('resep', JSON.stringify(resep))
                 document.getElementById("submit").innerText = "Tambah Obat";
                 alert("Data resep berhasil diupdate");
 
@@ -91,6 +91,7 @@
                     obat,
                     jumlah
                 });
+                localStorage.setItem('resep', JSON.stringify(resep))
                 alert("Data resep berhasil ditambahkan");
             }
 
@@ -133,6 +134,7 @@
             );
             if (konfirmasi) {
                 resep.splice(index, 1);
+                localStorage.setItem('resep', JSON.stringify(resep))
                 renderTable();
                 alert("Data resep berhasil dihapus");
             }
@@ -146,7 +148,7 @@
             indexUpdate = index;
             document.getElementById("submit").innerText = "Update";
         }
-
+        renderTable()
     </script>
 
 </body>

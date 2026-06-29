@@ -61,7 +61,7 @@
     </div>
 
     <script>
-        let transaksi = [];
+        let transaksi = localStorage.getItem('transaksi') ? JSON.parse(localStorage.getItem('transaksi')) : [];
         let indexUpdate = -1;
         function tambahTransaksi() {
             let namaPasien =
@@ -78,6 +78,7 @@
                     totalBayar
                 };
                 indexUpdate = -1;
+                localStorage.setItem('transaksi', JSON.stringify(transaksi))
                 document.getElementById("submit").innerText = "Bayar";
                 alert("Data transaksi berhasil diupdate");
             } else {
@@ -85,6 +86,7 @@
                     namaPasien,
                     totalBayar
                 });
+                localStorage.setItem('transaksi', JSON.stringify(transaksi))
                 alert("Pembayaran berhasil disimpan");
             }
             renderTable();
@@ -124,6 +126,7 @@
             );
             if (konfirmasi) {
                 transaksi.splice(index, 1);
+                localStorage.setItem('transaksi', JSON.stringify(transaksi))
                 renderTable();
                 alert("Transaksi berhasil dihapus");
             }
@@ -136,7 +139,7 @@
             indexUpdate = index;
             document.getElementById("submit").innerText = "Update";
         }
-
+         renderTable()
     </script>
 
 </body>
